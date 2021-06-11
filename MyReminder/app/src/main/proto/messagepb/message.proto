@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.hle.myreminder.message";
+option java_outer_classname = "MessageProto";
+
+package message;
+
+// The stickernote service definition.
+service StickerNote {
+  // Sends a greeting
+  rpc StickerNote (MessageRequest) returns (MessageReply) {}
+}
+
+// The request message containing the user's name.
+message MessageRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message MessageReply {
+  string message = 1;
+}

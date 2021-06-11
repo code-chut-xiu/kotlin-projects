@@ -1,0 +1,15 @@
+syntax = "proto3";
+package messagepb;
+
+service StickyNote {
+  rpc Get(StickyNoteRequest) returns (StickyNoteResponse) {}
+  //rpc Update(stream StickyNoteRequest) return (stream StickyNoteResponse) {}
+}
+
+message StickyNoteRequest {
+  string message = 1;
+}
+
+message StickyNoteResponse {
+  bytes image = 1;
+}

@@ -1,0 +1,33 @@
+syntax = "proto3";
+package provision.v1;
+
+option java_multiple_files = true;
+option go_package = "com.example/grpcapplication/proto";
+
+// Provides functionality for DNS provisioning.
+service DNSProvisioningService {
+  /**
+   * Provisions a device for DNS and generates information needed.
+   *
+   * Secured by user account authorization bearer token matching RFC 7650.
+   * Must be provided in rpc metadata as ("Authorization", "Bearer {token}")
+  */
+  rpc GetDNSProvisioning(GetProvisioningRequest) returns (GetProvisioningResponse);
+}
+
+// Result of a provision request to be used by the DNS SDK to pack a resolution request.
+message GetProvisioningRequest {
+  // Universally Unique Identifier (UUID) of the device. Based on RFC4122.
+  string device_id = 1;
+}
+
+// Response from provision, standard error codes apply
+message GetProvisioningResponse {
+  string ipv4 = 1;            // reverse lookup of the request to generate the client ipv4 address
+  string ipv6 = 2;            // reverse lookup of the request to generate the client ipv6 address
+  string host_name = 3;        // client computer host name generated
+  string domain_name = 4;      // client computer domain name generated
+  string device_mid = 5;       // instance Mid identifier as broken down by the deviceId or other way to uniquely identify the user
+  string operating_system = 6; // operating system version reverse generated from the request
+  string resolver = 7;        // URL resolver for DoH request dynamically generated
+}
